@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="cache-control" content="max-age=604800" />
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Crypto Exchange</title>
+        <link href="{% static 'images/favicon.ico' %}"
+              rel="shortcut icon"
+              type="image/x-icon">
+        <script src="{% static 'js/jquery-2.0.0.min.js' %}" type="text/javascript"></script>
+        <script src="{% static 'js/bootstrap.bundle.min.js' %}" type="text/javascript"></script>
+        <link href="{% static 'css/bootstrap.css' %}"
+              rel="stylesheet"
+              type="text/css"/>
+        <link href="{% static 'css/ui.css' %}" rel="stylesheet" type="text/css"/>
+        <link href="{% static 'css/responsive.css' %}"
+              rel="stylesheet"
+              media="only screen and (max-width: 1200px)"/>
+        <script src="{% static 'js/script.js' %}" type="text/javascript"></script>
+        <script >
+        /// some script
+        // jquery ready start
+        $(document).ready(function() {
+        // jQuery code
+        });
+        // jquery end
+        </script>
+    </head>
+    <body>
+        <header class="section-header" >
+            <section class="header-main border-bottom">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-2 col-md-3 col-6" >
+                            <a href="{% url 'market_data_view' %}" >Market Data</a>
+                        </div>
+                    <div class="col-lg-2 col-md-3 col-6">
+                        <a href="{% url 'buy' %}" >Buy</a>
+                    </div>
+                <div class="col-lg-2 col-md-3 col-6">
+                        <a href="{% url 'sell' %}" >Sell</a>
+                    </div>
+                <div class="col-lg-2 col-md-3 col-6">
+                        <a href="{% url 'track_order' %}" >Track Orders</a>
+                    </div>
+                        
+                        <div class="col-lg-2 col-md-3 col-6">
+                            <div class="d-flex justify-content-end">
+                                    {% if user.id is None %}
+                                        <div>
+                                            <a href="{% url 'login' %}">Sign in</a> <span class="dark-transp">|</span>
+                                            <a href="{% url 'register' %}">Register</a>
+                                        </div>
+                                    {% else %}
+                                    <div>
+                                        <a href="{% url 'dashboard' %}">{{ user.username }}</a> <span class="dark-transp">|</span>
+                                        <a href="{% url 'logout' %}">sign out</a>
+                                    </div>
+                                    
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </header>
+        {% block start %}{% endblock %}
+    </body>
+</html>

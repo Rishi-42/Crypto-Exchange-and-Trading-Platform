@@ -1,0 +1,21 @@
+{% extends "unincluded_base.html" %}
+{%block start%}
+
+<section class="section-conten padding-y" style="min-height:84vh">
+	<div class="card mx-auto" style="max-width: 480px; margin-top:100px;">
+      <div class="card-body">
+        {% include 'includes/alerts.html' %}
+      <h4 class="card-title mb-4">Verify</h4>
+      <form action="{% url 'two_auth' %}" method="POST">
+        {% csrf_token %}
+          <div class="form-group">
+		        <input type="number" class="form-control" placeholder="number" name="number" >
+          </div>
+          <div class="form-group">
+              <button type="submit" class="btn btn-primary btn-block"> Submit  </button>
+          </div>   
+      </form>
+      </div>
+    </div>
+</section>
+{%endblock%}

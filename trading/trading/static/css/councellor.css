@@ -1,0 +1,77 @@
+
+section{
+    padding:5rem;
+}
+
+.councellors{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: minmax(min-content, max-content);
+    gap: 3rem 3rem;
+    padding: 2rem;
+}
+.councellor
+    {
+        height: 27rem;
+        text-align: center;
+        padding: 2rem;
+        border: 0.1rem solid var(--secondary);
+        box-shadow: 0 .2rem 0.3rem rgba(0, 0, 0, .2);
+        border-radius: .3rem;
+        background: var(--heaven);
+        margin-top: 6rem;
+    }
+.councellor img{
+    height: 15rem;
+    width: 15rem;
+    border-radius: 50%;
+    border: 0.3rem solid #fff;
+    margin-top: -8rem;
+    object-fit: cover;
+    background-color: var(--heaven);
+}
+
+.councellor img:hover{
+    cursor: pointer;
+}
+.councellor a{
+    text-decoration: none;
+}
+.councellor h3{
+    font-size: 1.5rem;
+    color: var(--primary);
+    padding-top: 1rem;
+    /* padding: .5rem 0; */
+}
+.councellor h6{
+    font-size: 1rem;
+    color:var(--secondary);
+    opacity: 0.7;
+}
+
+.councellor p{
+    font-size: 1.1rem;
+    color: rgb(61, 61, 61);
+    padding: 1rem 0;
+    opacity: 0.8;
+    margin-bottom: 1rem;
+}
+.councellor .stars i {
+    font-size: 1.5rem;
+    color: black;
+    padding: 0.6rem;
+    opacity: 0.6;
+}
+.councellor .stars i:hover {
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #189AB4;
+    padding: 0.6rem;
+    opacity: 1;
+}
+
+@media only screen and (max-width: 768px) {
+    .brands-center {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

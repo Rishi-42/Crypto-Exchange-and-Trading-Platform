@@ -1,0 +1,79 @@
+{% extends 'included.html' %}
+{% load static %}
+{% block start %} 
+    <section class="section-content padding-y bg">
+    <div class="container">
+        <h4 class="card-title mb-4">Portfolio</h4>
+    <div class="row">
+        <aside class="col-lg-6">
+            <img src="data:image/png;base64,{{ image_base64 }}" alt="Balance Change over Time">
+    
+        </aside> <!-- col.// -->
+        <aside class="col-lg-6" style="margin-top: 50px;">
+    
+            <div class="card" style="padding:3rem;">
+            <div class="card-body" >
+                <h4>Absolute Profit: {{absolute_profit}}</h4>
+         
+    
+            </div>
+            <div class="card-body">
+                <h4>Percentage Profit: {{percentage_profit}}</h4>
+         
+    
+            </div>
+            </div>
+    
+    
+    </aside>
+    
+    
+    </div>
+    
+
+    
+    </div>
+
+
+
+    <div class="container">
+		<h4 class="text-center mb-20">Balance Summary</h4>
+		<div class="row">
+					<div class="card-body">
+                        <table class="table table table-shopping-cart">
+                            <thead class="text-left">
+                                <tr class="small text-uppercase">
+                                    <th scope="col">Balance_id</th>
+                                    <th scope="col">Price(USD)</th>
+									<th scope="col">Quantity(BTC)</th>
+									<th scope="col">Date</th>
+                                   
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for data in balance_data %}
+								<tr>
+									<td>
+										<label>{{ forloop.counter }}</label>
+									</td>
+									<td>
+											<var class="price">{{data.usd_amount}} USD</var>	
+									</td>
+									<td>
+										<label class="price">{{data.btc_quantity}} BTC</label>
+									</td>
+									<td>
+										<label>{{data.time_stamp}}</label>
+									</td>
+
+								</tr>
+								{% endfor %}
+                            </tbody>
+                        </table>
+                        
+
+					</div>
+        </div>
+    </div>
+</section>
+                    {% endblock %}

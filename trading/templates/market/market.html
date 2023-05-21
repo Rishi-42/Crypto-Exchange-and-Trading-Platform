@@ -1,0 +1,185 @@
+{% extends 'included.html' %}
+{% load static %}
+{% block start %} 
+    <section class="section-content padding-y bg">
+    <div class="container">
+        <h4 class="card-title mb-4">Market Data</h4>
+    <div class="row">
+        <aside class="col-lg-6">
+            <h4 class="text-center mb-20">Highest Price</h4>
+            <div class="row">
+                        <div class="card-body">
+                            <table id="highest-prices-table" class="table table table-shopping-cart">
+                                <thead class="text-left">
+                                    <tr class="small text-uppercase">
+                                        <th scope="col">Symbol</th>
+                                        <th scope="col">Price(USD)</th>
+                                       
+                                    </tr>
+                                </thead>
+                                <tbody id="highest-prices-body">
+                                    <!-- data will be dynamically inserted -->
+                                </tbody>
+                            </table>
+                            
+    
+                        </div>
+            </div>
+    
+        </aside> <!-- col.// -->
+        <aside class="col-lg-6">
+    
+            <h4 class="text-center mb-20">Lowest Price</h4>
+            <div class="row">
+                        <div class="card-body">
+                            <table id="lowest-prices-table" class="table table table-shopping-cart">
+                                <thead class="text-left">
+                                    <tr class="small text-uppercase">
+                                        <th scope="col">Symbol</th>
+                                        <th scope="col">Price(USD)</th>
+                                       
+                                    </tr>
+                                </thead>
+                                <tbody id="lowest-prices-body">
+                                    <!-- data will be dynamically inserted -->
+                                </tbody>
+                            </table>
+                            
+    
+                        </div>
+            </div>
+    
+    
+    </aside>
+    
+    
+    </div>
+    
+
+    
+    </div>
+
+
+
+    <div class="container">
+		<h4 class="text-center mb-20">Balance Summary</h4>
+		<<div class="row">
+            <div class="card-body">
+                <table id="market-table" class="table table table-shopping-cart">
+                    <thead class="text-left">
+                        <tr class="small text-uppercase">
+                            <th>Exchange</th>
+    <th  >Pair</th>
+    <th >Quote Currency</th>
+    <th >Price</th>
+    <th >Adjusted Volume 24h Shared</th>
+    <th  >Volume 24h</th>
+    <th >Time (Latest Update)</th>
+                           
+                        </tr>
+                    </thead>
+                    <tbody id="market-data-body">
+                        
+                    </tbody>
+                </table>
+                
+
+            </div>
+</div>
+    </div>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        function formatDate(timestamp) {
+            var date = new Date(timestamp);
+            var hours = date.getHours();
+            var minutes = date.getMinutes();
+            var seconds = date.getSeconds();
+            return hours + ':' + minutes + ':' + seconds;
+        }
+
+        function fetchMarketData() {
+            $.ajax({
+                url: "{{ url }}",
+                headers: {{ headers|safe }},
+                success: function(data) {
+                    var marketData = data;
+                    var marketTableBody = $('#market-data-body');
+                    marketTableBody.empty();
+    
+                    for (var i = 0; i < 25; i++) {
+                        var exchangeName = marketData[i].exchange_name;
+                        var pair = marketData[i].pair;
+                        var quoteCurrency = marketData[i].quote_currency_name;
+                        var price = marketData[i].quotes.USD.price;
+                        var adjustedVolume = marketData[i].adjusted_volume_24h_share;
+                        var volume = marketData[i].quotes.USD.volume_24h;
+                        var time = formatDate(marketData[i].last_updated);
+    
+                        var row = $('<tr></tr>');
+                        row.append('<td>' + exchangeName + '</td>');
+                        row.append('<td class="pair">' + pair + '</td>');
+                        row.append('<td class="quote-currency">' + quoteCurrency + '</td>');
+                        row.append('<td>' + (Math.ceil(price * 100) / 100) + '</td>');
+                        row.append('<td>' + (Math.ceil(adjustedVolume * 10000) / 10000) + '</td>');
+                        row.append('<td>' + (Math.ceil(volume * 100) / 100) + '</td>');
+                        row.append('<td class="time">' + time + '</td>');
+    
+                        marketTableBody.append(row);
+                    }
+                },
+                complete: function() {
+                    // Schedule the next update after a delay
+                    setTimeout(fetchMarketData, 150000);
+                }
+            });
+        }
+    
+        function fetchPriceData() {
+            $.ajax({
+                url: "https://api.binance.com/api/v3/ticker/price",
+                success: function(data) {
+                    var priceData = data;
+                    var highestPricesTableBody = $('#highest-prices-body');
+                    var lowestPricesTableBody = $('#lowest-prices-body');
+                    highestPricesTableBody.empty();
+                    lowestPricesTableBody.empty(); 
+                    // Sort the priceData
+                    priceData.sort(function(a, b) {
+                        return b.price - a.price;
+                    });
+                    // Populate the highest prices table with the top 10 prices
+                    for (var j = 0; j < 10; j++) {
+                        var highestPriceRow = $('<tr></tr>');
+                        highestPriceRow.append('<td class="pair">' + priceData[j].symbol + '</td>');
+                        highestPriceRow.append('<td>' + priceData[j].price + '</td>');
+                        highestPricesTableBody.append(highestPriceRow);
+                    }
+                    // Sort the priceData
+                    priceData.sort(function(a, b) {
+                        return a.price - b.price;
+                    });
+                    // Populate the lowest prices table with the bottom 10 prices
+                    for (var k = 0; k < 10; k++) {
+                        var lowestPriceRow = $('<tr></tr>');
+                        lowestPriceRow.append('<td class="pair">' + priceData[k].symbol + '</td>');
+                        lowestPriceRow.append('<td>' + priceData[k].price + '</td>');
+                        lowestPricesTableBody.append(lowestPriceRow);
+                    }
+                },
+                complete: function() {
+                    // Schedule the next update 
+                    setTimeout(fetchPriceData, 150000);
+                }
+            });
+        }
+    
+        fetchMarketData();
+        fetchPriceData();
+    });
+        
+</script>
+
+{% endblock %}

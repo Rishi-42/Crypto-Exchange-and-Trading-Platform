@@ -1,0 +1,51 @@
+{% extends 'included.html' %}
+{% load static %}
+
+{% block start %}
+<section class="section-content padding-y bg">
+	<div class="container">
+		<h4 class="text-center mb-20">Your Orders</h4>
+		<div class="row">
+					<div class="card-body">
+
+                        <table class="table table table-shopping-cart">
+                            <thead class="text-left">
+                                <tr class="small text-uppercase">
+                                    <th scope="col">Order_id</th>
+                                    <th scope="col">Order Type</th>
+                                    <th scope="col">Price(USD)</th>
+									<th scope="col">Quantity(BTC)</th>
+									<th scope="col">Date</th>
+                                   
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for data in order_data %}
+								<tr>
+									<td>
+										<label>{{ forloop.counter }}</label>
+									</td>
+									<td>
+										<label>{{data.order_type}}</label>
+									</td>
+									<td>
+											<var class="price">{{data.price}} USD</var>	
+									</td>
+									<td>
+										<label class="price">{{data.quantity}} BTC</label>
+									</td>
+									<td>
+										<label>{{data.time_stamp}}</label>
+									</td>
+
+								</tr>
+								{% endfor %}
+                            </tbody>
+                        </table>
+
+					</div>
+				</div>
+			</div>
+		</section>
+					
+                    {% endblock %}
