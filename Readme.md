@@ -32,6 +32,28 @@ This is a cryptocurrency trading web application that interfaces with a cryptocu
 9. Start the development server: `python manage.py runserver`
 10. Access the platform in a web browser: `http://localhost:8000`
 
+## File Structure
+```
+Crypto-Exchange-and-Trading-Platform/
+|-- src/
+|   |-- backend/
+|   |   |-- accounts/
+|   |   |-- market/
+|   |   |-- orders/
+|   |-- frontend/
+|   |   |-- static/
+|   |   |-- templates/
+|   |-- trading/
+|   |   |-- settings.py
+|   |   |-- urls.py
+|   |   |-- asgi.py
+|   |   |-- wsgi.py
+|   |-- manage.py
+|   |   |-- requirements.txt
+|-- .gitignore
+|-- Readme.md
+```
+
 ## Usage
 
 - Create a new account or log in to an existing account.
@@ -39,10 +61,6 @@ This is a cryptocurrency trading web application that interfaces with a cryptocu
 - Use the provided interfaces to interact with the platform's features, such as searching for cryptocurrencies, placing orders, and viewing portfolio performance.
 - the two-factor authentication (2FA) is auto enabled to enhanced account security.
 - Ensure to stay within API rate limits to avoid interruptions in data retrieval and order processing.
-
-## Contribution
-
-Contributions to the project are most welcome. If you encounter any issues or have suggestions for improvements, please submit a GitHub issue or pull request.
 
 ## License
 
