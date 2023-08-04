@@ -2,7 +2,7 @@ import math
 import base64
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from accounts.models import Account
+from backend.accounts.models import Account
 from django.contrib import messages
 from .models import balance, orders_details
 import matplotlib.pyplot as plt
